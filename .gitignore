@@ -4,3 +4,5 @@
 /logs/*.log
 /var/cache/*
 /composer.lock
+/node_modules/
+/.env
