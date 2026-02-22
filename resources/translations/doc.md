@@ -1,0 +1,1 @@
+[Set up localization](https://samuel-gfeller.ch/docs/Translations)

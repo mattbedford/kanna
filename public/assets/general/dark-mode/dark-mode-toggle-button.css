@@ -1,0 +1,46 @@
+:root {
+    /* Change to lower number to make it appear darker e.g. 30% so it's visible on a bright background */
+    --dark-theme-icon-filter: invert(70%);
+}
+
+[data-theme="dark"] {
+    --dark-theme-icon-filter: invert(80%);
+}
+
+/*mobile first min-width sets base and content is adapted to computers.*/
+@media (min-width: 100px) {
+    #dark-theme-toggle {
+        width: 25px;
+        /* For it to be perfectly in the center of the navbar I'm using height variable set in navbar css */
+        height: var(--mobile-nav-height);
+        border-radius: 50%;
+        /*cursor: pointer;*/
+        transition: background 0.3s ease-in-out;
+        /*Required so that icon is on the right side in home page*/
+        margin-left: auto;
+        cursor: pointer;
+        position: absolute;
+        left: 20px;
+
+    }
+
+    #dark-theme-toggle img {
+        filter: var(--dark-theme-icon-filter);
+        width: 100%;
+        min-width: 25px;
+        height: 100%;
+    }
+}
+
+/*portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones*/
+@media (min-width: 641px) {
+
+}
+
+/*tablet, landscape iPad, lo-res laptops ands desktops*/
+@media (min-width: 961px) {
+    #dark-theme-toggle {
+        right: 20px;
+    }
+}
+

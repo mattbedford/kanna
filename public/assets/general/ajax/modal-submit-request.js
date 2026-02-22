@@ -1,0 +1,52 @@
+import {handleFail} from "./ajax-util/fail-handler.js?v=4.0.1";
+import {getFormData, toggleEnableDisableForm} from "../page-component/modal/modal-form.js?v=4.0.1";
+import {basePath} from "../general-js/config.js?v=4.0.1";
+import {closeModal} from "../page-component/modal/modal.js?v=4.0.1";
+
+/**
+ * Retrieves form data, checks form validity, disables form, submits modal form and closes it on success.
+ *
+ * @param {string} modalFormId
+ * @param {string} moduleRoute POST module route like "users" or "clients"
+ * @param {string} httpMethod POST or PUT
+ * @return {void|Promise} with as content server response as JSON
+ */
+export function submitModalForm(
+    modalFormId, moduleRoute, httpMethod
+) {
+    // Check if form content is valid (frontend validation)
+    let modalForm = document.getElementById(modalFormId);
+    if (modalForm.checkValidity() === false) {
+        // If not valid, report to user and return void
+        modalForm.reportValidity();
+        // If nothing is returned "then()" will not exist; add "?" before the call: submitModalForm()?.then()
+        return;
+    }
+
+    // Serialize form data before disabling form elements
+    // let formData = getFormData(modalForm);
+    const formData = new FormData(modalForm);
+
+    // Disable form to indicate that the request is made AFTER getting form data as FormData doesn't consider disabled fields
+    toggleEnableDisableForm(modalFormId);
+
+    return fetch(basePath + moduleRoute, {
+        method: httpMethod,
+        // Content-Type NOT set here – the browser will set multipart/form-data with boundary
+        // A special body parser is required in the backend to handle PUT requests containing
+        // a body with content type multipart/form-data
+        body: formData,
+    })
+        .then(async response => {
+            if (!response.ok) {
+                // Re enable form if request is not successful
+                toggleEnableDisableForm(modalFormId);
+                // Default fail handler
+                await handleFail(response);
+                // Throw error so it can be caught in catch block
+                throw new Error('Response status: ' + response.status);
+            }
+            closeModal();
+            return response.json();
+        });
+}
