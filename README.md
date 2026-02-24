@@ -51,3 +51,14 @@ All started from the ideas and hard work of [samuelgfeller/slim-starter](https:/
 4. **Schema defines everything.** One config file per content type. The engine does the rest.
 5. **Swap what you want.** SQLite today, PostgreSQL tomorrow. Tabler today, custom UI tomorrow.
 6. **No private equity.** MIT licensed. No "free tier" that turns paid. No rug pulls.
+
+
+## Start up
+- Clone repo
+- cd inside
+- run `php bin/setup.php` to start and download the tailwind cli standalone
+- run `php -S localhost:8080 -t public` to start server locally
+- Then navigate to localhost:8000 to see what you've got!
+
+##
+- Rebuild css file with `./bin/tailwindcss -i resources/css/app.css -o public/assets/css/app.css`

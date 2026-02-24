@@ -1,0 +1,86 @@
+@import "tailwindcss";
+
+/*
+ * Kanna Admin Theme
+ * Inspired by Strapi's clean, modern admin aesthetic.
+ *
+ * Usage examples:
+ *   bg-primary       → Indigo accent background
+ *   text-primary     → Indigo accent text
+ *   bg-surface       → Main content background (white / dark gray)
+ *   bg-sidebar       → Sidebar background
+ *   text-body        → Default body text
+ *   text-muted       → Secondary/subdued text
+ *   border-default   → Standard border color
+ */
+
+/* ---------------------------------------------------------------------------
+ * Tell Tailwind to use the existing data-theme attribute for dark mode
+ * instead of the default .dark class
+ * ------------------------------------------------------------------------- */
+@variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* ---------------------------------------------------------------------------
+ * Theme tokens — Light mode defaults
+ * These become Tailwind utilities: bg-primary, text-body, border-default, etc.
+ * ------------------------------------------------------------------------- */
+@theme {
+    /* Primary accent — Strapi's signature indigo */
+    --color-primary: #4945FF;
+    --color-primary-hover: #3B38E0;
+    --color-primary-light: #D9D8FF;
+
+    /* Danger / destructive actions */
+    --color-danger: #EE5E52;
+    --color-danger-hover: #D44033;
+
+    /* Success */
+    --color-success: #5CB176;
+
+    /* Warning */
+    --color-warning: #F29D41;
+
+    /* Surfaces — the backgrounds of your UI regions */
+    --color-surface: #FFFFFF;
+    --color-surface-alt: #F6F6F9;
+    --color-sidebar: #212134;
+
+    /* Text */
+    --color-body: #32324D;
+    --color-muted: #8E8EA9;
+    --color-heading: #32324D;
+    --color-inverse: #FFFFFF;
+
+    /* Borders */
+    --color-default: #DCDCE4;
+    --color-strong: #C0C0CF;
+}
+
+/* ---------------------------------------------------------------------------
+ * Dark mode overrides
+ * When data-theme="dark", these swap in automatically.
+ * The dark: variant in templates also works: e.g. dark:bg-surface
+ * ------------------------------------------------------------------------- */
+[data-theme="dark"] {
+    --color-primary: #7B79FF;
+    --color-primary-hover: #6664E0;
+    --color-primary-light: #2E2E5E;
+
+    --color-danger: #F5A29A;
+    --color-danger-hover: #EE5E52;
+
+    --color-success: #7EE09B;
+    --color-warning: #F5C97A;
+
+    --color-surface: #212134;
+    --color-surface-alt: #181826;
+    --color-sidebar: #181826;
+
+    --color-body: #E0E0FF;
+    --color-muted: #8E8EA9;
+    --color-heading: #F0F0FF;
+    --color-inverse: #212134;
+
+    --color-default: #3D3D5C;
+    --color-strong: #4A4A6A;
+}

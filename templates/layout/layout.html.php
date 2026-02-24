@@ -25,6 +25,7 @@
     <?php
     // Define layout assets
     $layoutCss = [
+        'assets/css/app.css',
         'assets/general/general-font/fonts.css',
         'assets/general/general-css/general.css',
         'assets/general/general-css/colors.css',
@@ -33,21 +34,21 @@
         'assets/general/page-component/flash-message/flash-message.css',
         'assets/general/dark-mode/dark-mode-toggle-button.css',
     ];
-$layoutJs = ['assets/navbar/navbar.js', 'assets/general/dark-mode/dark-mode.js'];
-$layoutJsModules = ['assets/general/general-js/default.js'];
+    $layoutJs = ['assets/navbar/navbar.js', 'assets/general/dark-mode/dark-mode.js'];
+    $layoutJsModules = ['assets/general/general-js/default.js'];
 
-// fetch() includes another template in the current template
-// Include template that renders the asset paths
-echo $this->fetch(
-    'layout/assets.html.php',
-    [ // Merge layout assets and assets required by templates (added via $this->addAttribute())
-        'stylesheets' => array_merge($layoutCss, $css ?? []),
-        'scripts' => array_merge($layoutJs, $js ?? []),
-        // The type="module" allows the use of import and export inside a JS file.
-        'jsModules' => array_merge($layoutJsModules, $jsModules ?? []),
-    ]
-);
-?>
+    // fetch() includes another template in the current template
+    // Include template that renders the asset paths
+    echo $this->fetch(
+        'layout/assets.html.php',
+        [ // Merge layout assets and assets required by templates (added via $this->addAttribute())
+            'stylesheets' => array_merge($layoutCss, $css ?? []),
+            'scripts' => array_merge($layoutJs, $js ?? []),
+            // The type="module" allows the use of import and export inside a JS file.
+            'jsModules' => array_merge($layoutJsModules, $jsModules ?? []),
+        ]
+    );
+    ?>
 
     <title><?php echo html($config['app_name']); ?></title>
 
@@ -66,13 +67,13 @@ echo $this->fetch(
         <?php echo $this->fetch('layout/navbar.html.php', []); ?>
 
         <?php
-    // Add session and flash messages: https://samuel-gfeller.ch/docs/Session-and-Flash-messages
-?>
+        // Add session and flash messages: https://samuel-gfeller.ch/docs/Session-and-Flash-messages
+        ?>
     </header>
 
     <main>
         <?php echo /* Reserved PHPView variable for the template content */
-$content; ?>
+        $content; ?>
     </main>
 
     <?php echo $this->fetch('layout/footer.html.php', []); ?>
@@ -80,4 +81,3 @@ $content; ?>
 
 </body>
 </html>
-
