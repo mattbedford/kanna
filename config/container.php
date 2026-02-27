@@ -6,8 +6,8 @@
  * Documentation: https://samuel-gfeller.ch/docs/Dependency-Injection.
  */
 
-use App\Application\Middleware\PhpViewMiddleware;
-use App\Infrastructure\Settings\Settings;
+use App\Core\Middleware\PhpViewMiddleware;
+use App\Core\Settings\Settings;
 use Cake\Database\Connection;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\RotatingFileHandler;

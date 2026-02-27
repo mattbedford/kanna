@@ -6,5 +6,4 @@
 /composer.lock
 /node_modules/
 /.env
-/bin/tailwindcss
 bin/tailwindcss

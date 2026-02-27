@@ -1,7 +1,7 @@
 <?php
 
-use App\Application\Middleware\PhpViewMiddleware;
-use App\Application\Middleware\ValidationExceptionMiddleware;
+use App\Core\Middleware\PhpViewMiddleware;
+use App\Core\Middleware\ValidationExceptionMiddleware;
 use Selective\BasePath\BasePathMiddleware;
 use SlimErrorRenderer\Middleware\ExceptionHandlingMiddleware;
 use SlimErrorRenderer\Middleware\NonFatalErrorHandlingMiddleware;
