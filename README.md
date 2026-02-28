@@ -7,40 +7,38 @@ Built on Slim 4, inspired by Japanese craft tooling philosophy: remove what's un
 
 
 ## Goals
-There's a gap in the PHP world. Laravel sold its soul; Wordpress got taken over by the React Mafia; SlimPHP is too slim. 
-And a static site, though beautiful, is often too light or too difficult for customers to accept. ***Kezuru*** is my attempt
-to fill that gap. 
+There's a gap in the PHP world. Full frameworks bring power but also complexity and opinions you might not share. WordPress has evolved in directions that don't suit every project. Micro-frameworks give you freedom but leave you building everything from scratch.
 
-***Kezuru*** aims to be a starter package that lets customers have a nice admin panel; make edits to pages; and which 
-developers can customize to meet customer needs completely with PHP as the driving engine. 
+***Kezuru*** sits in that gap. It's a starter package that gives your clients a clean admin panel and content editing out of the box, while letting you as the developer build exactly what's needed with PHP as the driving engine.
 
 To succeed it must:
-- be light and portable; 
+- be light and portable;
 - free of vendor lock-in;
-- be easily extensible; 
+- be easily extensible;
 - allow end-clients to manage their content through a modern UI and not worry about breaking infra or designs;
 - feature a modern log in and auth system and allow multi-language sites;
 - [in future] allow e-Commerce builds with full security and transparency as well as offer an easy way to build "front-end admin" sites like membership sites or web-apps.
 
 
-All started from the ideas and hard work of [samuelgfeller/slim-starter](https://github.com/samuelgfeller/slim-starter)
+Built on the foundation and ideas of [samuelgfeller/slim-starter](https://github.com/samuelgfeller/slim-starter).
 
 
 ## Tech Stack
 
-| Layer            | Tool                     | Why                                    |
-|------------------|--------------------------|----------------------------------------|
-| Framework        | Slim 4                   | Micro-framework, no opinions, just PHP |
-| DI Container     | PHP-DI                   | Clean, annotation-free                 |
-| Database         | SQLite / MariaDB / PgSQL | One config change to switch            |
-| Query Builder    | cakephp/database         | Standalone, multi-driver, not an ORM   |
-| Migrations       | Phinx                    | Standard PHP migration tool            |
-| Templating       | PHP-View                 | Plain PHP templates, no Twig           |
-| JS               | Vanilla ES modules       | No jQuery, no bundler, no build step   |
-| Logging          | Monolog                  | Industry standard                      |
-| Testing          | PHPUnit                  | Industry standard                      |
-| Admin UI         | Tabler (TBD)             | MIT, modern, no framework dependency   |
+| Layer            | Tool                        | Why                                          |
+|------------------|-----------------------------|----------------------------------------------|
+| Framework        | Slim 4                      | Micro-framework, no opinions, just PHP       |
+| DI Container     | PHP-DI                      | Clean, annotation-free                       |
+| Database         | SQLite / MariaDB / PgSQL    | One config change to switch                  |
+| Query Builder    | cakephp/database            | Standalone, multi-driver, not an ORM         |
+| Migrations       | Phinx                       | Standard PHP migration tool                  |
+| Templating       | PHP-View                    | Plain PHP templates, no Twig                 |
+| CSS              | Tailwind v4 (standalone CLI)| No Node.js, no npm — single binary           |
+| JS               | Vanilla ES modules          | No jQuery, no bundler                        |
+| Logging          | Monolog                     | Industry standard                            |
+| Testing          | PHPUnit                     | Industry standard                            |
 
+**A note on the "no build step" claim:** Tailwind uses a standalone CLI binary to compile your CSS. It scans your templates and outputs only the classes you actually use, so the resulting file is small and cache-friendly. It's not Node, not npm, not webpack — but it is a compilation step. We think that's the right trade-off: you get utility-class CSS without pulling in 200MB of node_modules.
 
 
 ## Design Principles
@@ -49,16 +47,38 @@ All started from the ideas and hard work of [samuelgfeller/slim-starter](https:/
 2. **Clients edit content.** Clean fields, clear labels, nothing they don't need.
 3. **One server, one directory.** No microservices, no Docker required, no Node.
 4. **Schema defines everything.** One config file per content type. The engine does the rest.
-5. **Swap what you want.** SQLite today, PostgreSQL tomorrow. Tabler today, custom UI tomorrow.
+5. **Swap what you want.** SQLite today, PostgreSQL tomorrow. Tailwind today, custom CSS tomorrow.
 6. **No private equity.** MIT licensed. No "free tier" that turns paid. No rug pulls.
 
 
-## Start up
-- Clone repo
-- cd inside
-- run `php bin/setup.php` to start and download the tailwind cli standalone
-- run `php -S localhost:8080 -t public` to start server locally
-- Then navigate to localhost:8000 to see what you've got!
+## Getting Started
 
-##
-- Rebuild css file with `./bin/tailwindcss -i resources/css/app.css -o public/assets/css/app.css`
+```bash
+git clone git@github.com:mattbedford/kezuru.git mysite
+cd mysite
+composer install
+php bin/setup.php
+./bin/serve.sh
+```
+
+Then navigate to `http://localhost:8080` to see what you've got.
+
+
+## Rebuilding CSS
+
+After changing templates or adding Tailwind classes:
+
+```bash
+./bin/tailwindcss -i resources/css/app.css -o public/assets/css/app.css
+```
+
+For watch mode during development:
+
+```bash
+./bin/tailwindcss -i resources/css/app.css -o public/assets/css/app.css --watch
+```
+
+
+## Architecture
+
+See [ARCHITECTURE.md](ARCHITECTURE.md) for a full guide to the ADR (Action–Domain–Responder) pattern and directory conventions used in this project.
