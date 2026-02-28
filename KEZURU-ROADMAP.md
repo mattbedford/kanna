@@ -1,4 +1,4 @@
-# Kanna — Roadmap
+# Kezuru — Roadmap
 
 A lightweight PHP starter kit for developers who want to write PHP, not "framework".
 Built on Slim 4, inspired by Japanese craft tooling philosophy: remove what's unnecessary to reveal what's underneath.
@@ -28,7 +28,7 @@ Base: [samuelgfeller/slim-starter](https://github.com/samuelgfeller/slim-starter
 
 ## Phase 1 — Content Engine (MVP)
 
-The core of Kanna. A schema-driven content management system that auto-generates admin CRUD screens from simple PHP config files.
+The core of Kezuru. A schema-driven content management system that auto-generates admin CRUD screens from simple PHP config files.
 
 ### 1.1 Schema Definition Format
 
@@ -171,7 +171,7 @@ Split-pane editing: fields on the left, front-end preview on the right.
 
 ### Composer create-project
 ```bash
-composer create-project kanna/kanna mysite
+composer create-project kezuru/kezuru mysite
 cd mysite
 php bin/setup.php
 ```

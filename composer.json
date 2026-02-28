@@ -1,6 +1,6 @@
 {
-  "name": "samuelgfeller/slim-starter",
-  "description": "Slim 4 starter with frontend and API endpoint",
+  "name": "kezuru/kezuru",
+  "description": "A lightweight PHP starter kit for developers who want to write PHP, not framework",
   "type": "project",
   "license": "MIT",
   "require": {

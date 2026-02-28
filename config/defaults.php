@@ -41,8 +41,8 @@ $settings['error'] = [
 ];
 
 $settings['public'] = [
-    'app_name' => 'Slim Starter',
-    'main_contact_email' => 'contact@samuel-gfeller.ch',
+    'app_name' => 'Kezuru',
+    'main_contact_email' => '',
 ];
 
 // Secret values are overwritten in env.php

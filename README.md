@@ -1,4 +1,4 @@
-# Kanna
+# Kezuru
 ![Development Status](https://img.shields.io/badge/development-active-blue)
 ![Status](https://img.shields.io/badge/status-in%20progress-yellow)
 
@@ -8,10 +8,10 @@ Built on Slim 4, inspired by Japanese craft tooling philosophy: remove what's un
 
 ## Goals
 There's a gap in the PHP world. Laravel sold its soul; Wordpress got taken over by the React Mafia; SlimPHP is too slim. 
-And a static site, though beautiful, is often too light or too difficult for customers to accept. ***Kanna*** is my attempt
+And a static site, though beautiful, is often too light or too difficult for customers to accept. ***Kezuru*** is my attempt
 to fill that gap. 
 
-***Kanna*** aims to be a starter package that lets customers have a nice admin panel; make edits to pages; and which 
+***Kezuru*** aims to be a starter package that lets customers have a nice admin panel; make edits to pages; and which 
 developers can customize to meet customer needs completely with PHP as the driving engine. 
 
 To succeed it must:

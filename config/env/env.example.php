@@ -1,22 +1,26 @@
 <?php
 
 /**
- * Secret environment specific configuration values.
- * Configuration documentation: https://samuel-gfeller.ch/docs/Configuration.
+ * Environment configuration.
  *
- * Make sure this env.php file is added to .gitignore and ideally place it outside
- * the project root directory.
- *
- * Every key must be set by its own to not overwrite the entire array.
- * Correct: $settings['db]['key'] = 'val'; $settings['db]['nextKey'] = 'nextVal';
- * Incorrect: $settings['db'] = [ 'key' => 'val', 'nextKey' => 'nextVal',];
+ * Copy this file to env.php and adjust for your environment.
+ * env.php is gitignored — never commit secrets.
  */
 
-// $_ENV['APP_ENV'] should be set to "prod" in the secret env.php file of the prod server.
-// APP_ENV must NOT be set to "dev" in the development secret env.php as it's already the default value
-// and would override the phpunit.xml APP_ENV "test" setting.
+// Environment: 'dev' or 'prod'
+$settings['env'] = 'dev';
 
-// Database
-$settings['db']['host'] = 'localhost';
-$settings['db']['username'] = 'root';
-$settings['db']['password'] = '';
+// Dev mode: show error details, enable JS cache busting
+$settings['dev'] = true;
+$settings['error']['display_error_details'] = true;
+$settings['deployment']['update_js_imports_version'] = true;
+
+// Database (SQLite is the default — override here for MariaDB/PostgreSQL)
+// $settings['db']['driver'] = Cake\Database\Driver\Mysql::class;
+// $settings['db']['host'] = 'localhost';
+// $settings['db']['username'] = 'root';
+// $settings['db']['password'] = '';
+// $settings['db']['database'] = 'kezuru';
+
+// CORS: allowed origin for API requests
+$settings['api']['allowed_origin'] = 'http://localhost';

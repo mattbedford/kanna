@@ -6,7 +6,7 @@ $this->setLayout('layout/layout.html.php');
 
     <!-- Header -->
     <div class="mb-8">
-        <h1 class="text-3xl font-bold text-heading">Kanna Theme Test</h1>
+        <h1 class="text-3xl font-bold text-heading">Kezuru Theme Test</h1>
         <p class="text-muted mt-1">Toggle dark mode to see both palettes. This page is temporary.</p>
     </div>
 

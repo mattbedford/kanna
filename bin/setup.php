@@ -2,7 +2,7 @@
 <?php
 
 /**
- * Kanna Setup Script
+ * Kezuru Setup Script
  *
  * Run once after cloning the project to prepare the development environment.
  * Usage: php bin/setup.php
@@ -42,7 +42,7 @@ function fail(string $message): void
 $root = dirname(__DIR__);
 
 echo "\n";
-echo "  Kanna – Project Setup\n";
+echo "  Kezuru – Project Setup\n";
 echo "  =====================\n\n";
 
 // ---------------------------------------------------------------------------

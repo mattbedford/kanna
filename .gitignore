@@ -1,9 +1,10 @@
 /vendor/
 /.idea/
-/config/env/env.php
+config/env/env.php
 /logs/*.log
 /var/cache/*
-/composer.lock
 /node_modules/
-/.env
 bin/tailwindcss
+storage/database.sqlite
+storage/uploads/*
+!storage/uploads/.gitkeep
