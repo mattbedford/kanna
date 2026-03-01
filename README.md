@@ -54,34 +54,88 @@ Built on the foundation and ideas of [samuelgfeller/slim-starter](https://github
 6. **No private equity.** MIT licensed. No "free tier" that turns paid. No rug pulls.
 
 
-## Getting Started
+## Quick Start (3 minutes)
+
+**Prerequisites:** PHP 8.2+, Composer, and these PHP extensions: `pdo`, `pdo_sqlite`, `json`, `intl`, `gettext`. Most PHP installs have these already — if `composer install` complains, that's what's missing.
 
 ```bash
+# 1. Clone and install
 git clone git@github.com:mattbedford/kezuru.git mysite
 cd mysite
 composer install
+
+# 2. Run setup — creates storage dirs, SQLite database, Phinx config,
+#    downloads Tailwind CLI binary, builds CSS
 php bin/setup.php
-./bin/serve.sh
+
+# 3. Create your local env config
+cp config/env/env.example.php config/env/env.php
+
+# 4. Run database migrations (creates the user table, etc.)
+vendor/bin/phinx migrate -c config/env/env.phinx.php
+
+# 5. Start the dev server
+bash bin/serve.sh
 ```
 
-Then navigate to `http://localhost:8080` to see what you've got.
+Open **http://localhost:8080** — you should see the home page.
+Open **http://localhost:8080/admin** — the admin dashboard.
+Open **http://localhost:8080/users/list** — the user list (empty until you create some).
 
+### What each step actually does
 
-## Rebuilding CSS
+| Step | What happens |
+|------|-------------|
+| `composer install` | Pulls all PHP dependencies into `vendor/` |
+| `php bin/setup.php` | Creates `storage/`, `logs/`, `storage/database.sqlite` (empty file), generates `config/env/env.phinx.php` (Phinx migration config), downloads the Tailwind standalone binary for your OS, and runs an initial CSS build |
+| `cp env.example.php env.php` | Creates your local config. SQLite is the default — no database server needed. Edit this file to switch to MariaDB/PostgreSQL |
+| `phinx migrate` | Creates database tables inside the SQLite file |
+| `bash bin/serve.sh` | Starts PHP's built-in server on port 8080 |
 
-After changing templates or adding Tailwind classes:
+### During development
+
+**Rebuild CSS** after changing templates or adding new Tailwind classes:
 
 ```bash
 ./bin/tailwindcss -i resources/css/app.css -o public/assets/css/app.css
 ```
 
-For watch mode during development:
+**Watch mode** (auto-rebuilds on file changes):
 
 ```bash
 ./bin/tailwindcss -i resources/css/app.css -o public/assets/css/app.css --watch
 ```
 
+**Run tests:**
+
+```bash
+vendor/bin/phpunit
+```
+
+### Switching databases
+
+SQLite works out of the box for development — no server, no credentials, just a file. To switch to MariaDB or PostgreSQL, uncomment and edit the database block in `config/env/env.php`:
+
+```php
+$settings['db']['driver'] = Cake\Database\Driver\Mysql::class;
+$settings['db']['host'] = 'localhost';
+$settings['db']['username'] = 'root';
+$settings['db']['password'] = '';
+$settings['db']['database'] = 'kezuru';
+```
+
+Then re-run `vendor/bin/phinx migrate -c config/env/env.phinx.php` to create tables in the new database.
+
+### Troubleshooting
+
+| Problem | Fix |
+|---------|-----|
+| `setup.php` fails downloading Tailwind | Check your internet connection. You can also [download the binary manually](https://github.com/tailwindlabs/tailwindcss/releases) and place it at `bin/tailwindcss` |
+| Missing PHP extension errors | Install the missing extension: `sudo apt install php-intl php-sqlite3` (Debian/Ubuntu) or equivalent for your OS |
+| Port 8080 already in use | Edit `bin/serve.sh` and change the port, or kill whatever's using it |
+| Phinx migration fails | Run `php bin/setup.php` first — it generates `config/env/env.phinx.php`. If switching databases, regenerate it by deleting the file and re-running setup |
+
 
 ## Architecture
 
-See [ARCHITECTURE.md](ARCHITECTURE.md) for a full guide to the ADR (Action–Domain–Responder) pattern and directory conventions used in this project.
+See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for a full guide to the ADR (Action–Domain–Responder) pattern, directory conventions, and the HTMX interaction model used in this project.
