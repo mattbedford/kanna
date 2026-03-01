@@ -27,7 +27,9 @@
         'assets/css/app.css',
     ];
     $adminJs = [
+        'assets/vendor/htmx/htmx.min.js', // HTMX 4.0.0-alpha7 — v4 pre-release, see four.htmx.org
         'assets/general/dark-mode/dark-mode.js',
+        'assets/admin/admin-htmx.js',
     ];
     $adminJsModules = [];
 

@@ -34,7 +34,7 @@ final readonly class UserReadPageAction
 
         try {
             // Retrieve user infos
-            return $this->templateRenderer->render($response, 'user/user-read.html.php', [
+            return $this->templateRenderer->render($response, 'admin/users/read.php', [
                 'user' => $this->userReadFinder->getUserById($userId),
             ]);
         } catch (DomainRecordNotFoundException $domainRecordNotFoundException) {

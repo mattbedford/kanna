@@ -14,9 +14,12 @@ return function (App $app) {
 
     // User action routes
     $app->group('/users', function (RouteCollectorProxy $group) {
-        // User list page
+        // User list page (server-rendered)
         $group->get('/list', \App\Module\User\List\UserListPageAction::class)
             ->setName('user-list-page');
+        // Create form partial (HTMX fetches this into a modal)
+        $group->get('/create', \App\Module\User\Create\UserCreateFormAction::class)
+            ->setName('user-create-form');
         // Fetch user list for Ajax call
         $group->get('', \App\Module\User\List\UserFetchListAction::class)
             ->setName('user-list');

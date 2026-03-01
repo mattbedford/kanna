@@ -27,7 +27,7 @@ $navItems = [
 ];
 ?>
 
-<aside class="bg-sidebar text-inverse flex flex-col min-h-screen">
+<aside class="bg-sidebar text-white flex flex-col min-h-screen">
 
     <!-- Brand -->
     <div class="px-6 py-5 border-b border-white/10">

@@ -313,3 +313,61 @@ The rules are simple:
 If a class is doing two of these jobs, split it. If a file is getting long, you've probably mixed concerns.
 
 The trade-off is more files. A simple CRUD module has around 15 files where Laravel might have 3. But each file is small, single-purpose, and obvious. You'll never open a file and wonder what it does or where to add new logic. That's the trade worth making.
+
+---
+
+## Interaction Model: PHP Renders Everything, HTMX Swaps It
+
+The admin panel uses [HTMX v4](https://four.htmx.org/) (pre-release) as its interaction layer. This is a deliberate architectural decision that affects how every CRUD screen works.
+
+### The Rule
+
+> **The server always returns HTML.** For initial page loads, the server renders full pages. For mutations (create, update, delete), the server renders HTML fragments. HTMX swaps those fragments into the DOM. Custom JavaScript is only for UI polish — dark mode, modal open/close, flash messages.
+
+### Why HTMX, Not JSON + JS
+
+The old approach (which we moved away from) was: server returns JSON → JavaScript builds the DOM. That means writing every UI component twice — once in PHP templates for the server-rendered version, once in JS for the dynamic version. HTMX eliminates this: the server renders the HTML once, and HTMX handles getting it into the page.
+
+This also means the Content Engine (Phase 1) only needs to generate PHP templates with HTMX attributes. Zero generated JavaScript.
+
+### How CRUD Works With HTMX
+
+**List page** — Full server render. PHP queries the database, loops over results, renders a table. The page arrives complete — no skeleton loaders, no loading spinners, no JS data fetching.
+
+**Create** — User clicks "New User" → HTMX fetches a form partial from the server → injects it into a modal container. User submits → HTMX POSTs the form → server validates and either returns a new table row (appended to the table) or the form again with error messages.
+
+**Update** — Edit page renders with pre-populated form. User submits → HTMX PUTs the form → server validates and returns the updated form partial.
+
+**Delete** — User clicks Delete → `hx-confirm` shows a browser confirmation → HTMX sends DELETE → server returns empty body → HTMX removes the row from the DOM.
+
+### Partials: The DRY Piece
+
+Each module has partial templates in `templates/admin/{module}/partials/`. These are small HTML fragments (a single table row, a form) that serve double duty:
+
+1. Included in the full page template during initial render (inside a `foreach` loop, for example)
+2. Returned standalone as HTMX responses after mutations
+
+Same partial, two contexts. One source of truth for how a user row or a form looks.
+
+### Validation Error Handling
+
+Admin Actions catch `ValidationException` locally instead of letting it bubble up to the `ValidationExceptionMiddleware`. This is because the middleware returns JSON (for the API), but admin Actions need to return HTML fragments with inline error messages.
+
+HTMX v4's `hx-status:422` attribute controls where validation error responses get swapped — the form declares different targets for success and error responses right in the HTML.
+
+### The Boundary Table
+
+| Concern | Owner | Notes |
+|---------|-------|-------|
+| Page structure and layout | PHP template | Full page render, always |
+| Data rendered into HTML | PHP template | Initial loads AND mutation responses |
+| Mutation responses | PHP Action → HTML partial | Not JSON — rendered HTML fragments |
+| DOM swapping after mutations | HTMX | Via `hx-target`, `hx-swap`, `hx-status:XXX` |
+| Modal open/close | Minimal JS | `admin-htmx.js` listens for `closeModal` event |
+| Flash messages | HTMX `HX-Trigger` header + JS listener | Server triggers, JS renders toast |
+| Dark mode | Existing JS | `dark-mode.js`, unchanged |
+| Page navigation | Standard `<a>` links | No client-side routing |
+
+### HTMX Version Note
+
+We're using HTMX **4.0.0-alpha7** (pre-release). Key v4 features we depend on are flagged with comments in the templates. If v4 causes issues, see `docs/HTMX-REFERENCE.md` for the specific features and their fallback strategies.

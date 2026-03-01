@@ -1,16 +1,15 @@
 <?php
 
-namespace App\Module\User\List;
+namespace App\Module\User\Create;
 
 use App\Core\Responder\TemplateRenderer;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-final readonly class UserListPageAction
+final readonly class UserCreateFormAction
 {
     public function __construct(
         private TemplateRenderer $templateRenderer,
-        private UserListFinder $userListFinder,
     ) {
     }
 
@@ -19,8 +18,6 @@ final readonly class UserListPageAction
         ResponseInterface $response,
         array $args,
     ): ResponseInterface {
-        return $this->templateRenderer->render($response, 'admin/users/list.php', [
-            'users' => $this->userListFinder->findAllUsers(),
-        ]);
+        return $this->templateRenderer->render($response, 'admin/users/partials/user-form.php');
     }
 }
