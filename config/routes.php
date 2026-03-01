@@ -9,6 +9,9 @@ return function (App $app) {
     $app->get('/', \App\Module\Home\HomePageAction::class)->setName('home-page');
     $app->get('/home', \App\Module\Home\RedirectToHomePageAction::class);
 
+    // Admin
+    $app->get('/admin', \App\Module\Admin\Dashboard\AdminDashboardAction::class)->setName('admin-dashboard');
+
     // User action routes
     $app->group('/users', function (RouteCollectorProxy $group) {
         // User list page

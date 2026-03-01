@@ -26,7 +26,9 @@
     $adminCss = [
         'assets/css/app.css',
     ];
-    $adminJs = [];
+    $adminJs = [
+        'assets/general/dark-mode/dark-mode.js',
+    ];
     $adminJsModules = [];
 
     echo $this->fetch('shared/assets.php', [
